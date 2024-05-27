@@ -1,0 +1,288 @@
+<mvc:View xmlns:unified="sap.ui.unified" xmlns:form="sap.ui.layout.form" xmlns:widgets="sap.ui.integration.widgets" xmlns:upload="sap.m.upload" 
+    xmlns:table="sap.ui.table" 
+    xmlns:m="sap.ui.webc.main"
+    controllerName="project2.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true"
+    xmlns:list="sap.m.List"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:layout="sap.ui.layout"
+    xmlns:tab="sap.m.TabContainer"
+    xmlns:f="sap.f"
+    xmlns:card="sap.f.cards"
+    xmlns="sap.m"
+>
+
+    <Page id="page" title="App Title">
+        <List
+            id="invoiceList"
+       
+            class="sapUiResponsiveMargin"
+            width="auto"
+            items="{localdata>/Invoices}"
+        >
+            <headerToolbar>
+                <Toolbar>
+                    <ToolbarSpacer />
+                    <SearchField
+                        width="50%"
+                        search=".onFilterInvoices"
+                    />
+                </Toolbar>
+            </headerToolbar>
+            <items>
+                <ObjectListItem
+                    title="{localdata>ProductName} {localdata>Quantity}"/>
+            </items>
+        </List>
+
+            <f:DynamicPage >
+                <f:header>
+                    <f:DynamicPageHeader >
+                        <f:content>
+                            <fb:FilterBar search=".onsearch" useToolbar="false">
+                                <MultiComboBox
+                                selectionChange=".onselection1"
+                                    id="pname"
+                                    width="350px"
+                                    items="{
+                                        path: 'localdata>/Invoices'
+                                        
+                                    }">
+                                    <core:Item key="{localdata>ProductName}" text="{localdata>ProductName}"/>
+                                </MultiComboBox>
+                                <MultiComboBox
+                                    selectionChange=".onselection2"
+                                    selectionFinish="handleSelectionFinish"
+                                    id="quant"
+                                    width="350px"
+                                    items="{
+                                        path: 'localdata>/Invoices'
+                                        
+                                    }">
+                                    <core:Item key="{localdata>Quantity}" text="{localdata>Quantity}"/>
+                                </MultiComboBox>
+                                <MultiComboBox
+                                    selectionChange=".onselection3"
+                                    selectionFinish="handleSelectionFinish"
+                                    width="350px"
+                                    id="ship"
+                                    items="{
+                                        path: 'localdata>/Invoices'
+                                        
+                                    }">
+                                    <core:Item key="{localdata>ShipperName}" text="{localdata>ShipperName}"/>
+                                </MultiComboBox>
+                            </fb:FilterBar>
+                        </f:content>
+                    </f:DynamicPageHeader>
+                </f:header>
+                
+                <f:content>
+                    <Table id="table" items="{path:'localdata>/Invoices'}">
+                        <columns>
+                            <Column >
+                                <Text text="Product Name"></Text>
+                            </Column>
+                            <Column >
+                                <Text text="Quantity"></Text>
+                            </Column>
+                            <Column >
+                                <Text text="ShipperName"></Text>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem >
+                                <cells>
+                                    <Text text="{localdata>ProductName}"></Text>
+                                    <Text text="{localdata>Quantity}"></Text>
+                                    <Text text="{localdata>ShipperName}"></Text>
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </f:content>  
+            </f:DynamicPage>
+
+        <Table items="{localdata>/Invoices}">
+            <columns > 
+                <Column >
+                    <Text text="Product"></Text>
+                </Column>
+                <Column >
+                    <Text text="Quantity"></Text>
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem >
+                    <cells>
+                        <Text text="{localdata>ProductName}"></Text>
+                        <Text text="{parts:[{path:'localdata>Quantity'}],formatter:'.formatter.oncheck'}"></Text>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <Title width="100%"></Title>
+            <GenericTile header="Application" subheader="Manager" url="https://sapui5.hana.ondemand.com/#/entity/sap.m.StandardTile/sample/sap.m.sample.TileContainer/code">
+            <TileContent >
+            <ImageContent src="https://ui5.sap.com/resources/sap/ui/documentation/sdk/images/logo_ui5.png"></ImageContent>
+            </TileContent>  
+            </GenericTile>
+        <Button text="next" press="onpress"></Button>
+
+        
+        
+        <!--card-->
+        <f:Card width="300px" >
+            <f:header>
+               <card:Header title="Train ticket Booking"
+               subtitle="Enjoy the journey" 
+               iconSrc="sap-icon://passenger-train"/>
+            </f:header>
+            <f:content>
+               <VBox height="100px" justifyContent="SpaceBetween">
+                  <HBox justifyContent="SpaceBetween">
+                    <ComboBox placeholder="From City" width="120px" items="{
+                        path:'localdata>/Invoices',
+                        sorter:{path:'text'}
+                    }">
+                    <core:Item key="{localdata>city}" text="{localdata>city}"></core:Item>
+                    </ComboBox>
+                     <ComboBox placeholder="To City" width="120px" items="{
+                        path:'localdata>/Invoices',
+                        sorter:{path:'text'}
+                     }">
+                    <core:Item key="{localdata>city}" text="{localdata>city}"></core:Item>
+                    </ComboBox>
+                   
+                  </HBox>
+                  <HBox renderType="Bare" justifyContent="SpaceBetween">
+                  <DatePicker width="200px" placeholder="Choose a date..." />
+                  <Button text="Book" press=".onBooking" type="Emphasized"/>
+                  </HBox>
+               </VBox>
+            </f:content>
+        </f:Card>
+
+        <!--Shell Bar-->
+        <f:ShellBar title="Application" secondTitle="Short description" showCopilot="true" showSearch="true" showNotifications="true" notificationsNumber="3">
+        <f:menu>
+        <Menu >
+        <MenuItem text="Train Booking" icon="sap-icon://subway-train"></MenuItem>
+        <MenuItem text="Car Booking" icon="sap-icon://car-rental"></MenuItem>
+        </Menu>
+        </f:menu>
+        </f:ShellBar>
+        <Button text="Helloo" press=".onpresstargetswithoutroutes"></Button>
+        <upload:UploadSet >
+        </upload:UploadSet>
+        
+        <!--WIZARD-->
+         <content>
+             <Wizard id="wizardcontent" complete="wizardcompleteHandler">
+              <WizardStep id="producttype" title="Product Type">
+               <MessageStrip text="The wizard is used to cut large works into smaller parts." showIcon="true"/>
+               <Text text="Sed fermentum, mi et tristique ullamcorper, sapien sapien faucibus sem, quis pretium nibh lorem malesuada diam. Nulla quis arcu aliquet, feugiat massa semper, volutpat diam. Nam vitae ante posuere, molestie neque sit amet,"></Text>
+               <HBox alignItems="Center" justifyContent="Center" width="100%">
+               <SegmentedButton width="200px" selectionChange="setProductChange" >
+               <items>
+                <SegmentedButtonItem icon="sap-icon://iphone" text="Phone" width="100px"/>
+                <SegmentedButtonItem icon="sap-icon://desktop-mobile" text="Desktop" width="100px"/>
+                <SegmentedButtonItem icon="sap-icon://database" text="Other" width="100px"/>
+               </items>
+               </SegmentedButton>
+               </HBox>
+              </WizardStep>
+              <WizardStep id="ProductInfo" validated="false" title="Product Information">
+               <MessageStrip text="Validation in the wizard is controlled by calling the validateStep(Step) and invalidateStep(Step) methods "
+										showIcon="true"/>
+               <Text text="Cras tellus leo, volutpat vitae ullamcorper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien et viverra imperdiet, orci erat porttitor nulla,"></Text>      
+               <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
+               <Label text="Name" required="true"/> 
+               <Input  valueStateText="Enter 6 symbols or more" placeholder="Enter name with lengthgreater than six"></Input>
+               <Label text="Weight" required="true"/> 
+               <Input  valueStateText="Enter 6 symbols or more" placeholder="Enter Digits"></Input>
+               <Label text="Manufacturer"/>
+									<Select selectedKey="{/productManufacturer}">
+										<core:Item key="Apple" text="Apple"/>
+										<core:Item key="Microsoft" text="Microsoft"/>
+										<core:Item key="Google" text="Google"/>
+										<core:Item key="Sony" text="Sony"/>
+										<core:Item key="Samsung" text="Samsung"/>
+										<core:Item key="Logitech" text="Logitech"/>
+									</Select>
+               </form:SimpleForm>
+              </WizardStep>
+              <WizardStep id="optionalInfo" validated="false" title="Optional Information" >
+              <MessageStrip text="You can validate steps by default with the validated='true' property of the step. The next button is always enabled." showIcon="true"></MessageStrip>
+              <Text text="Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem"></Text>
+              <form:SimpleForm editable="true" layout="ResponsiveGridLayout">
+              <Label text="Cover Photo"/>
+              <unified:FileUploader width="100px" style="Emphasized" placeholder="Choose a file for Upload..."></unified:FileUploader>
+              <Label text="Manufacturing Date"  />
+        
+    
+              </form:SimpleForm>
+              </WizardStep>
+             </Wizard>
+
+            <!--Row added when a button is pressed-->
+            <Table id="table2" items="{path:'localdata>/Invoices'}">
+                        <columns>
+                            <Column >
+                                <Text text="Product Name"></Text>
+                            </Column>
+                            <Column >
+                                <Text text="Quantity"></Text>
+                            </Column>
+                            <Column >
+                                <Text text="ShipperName"></Text>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem visible = "{=${localdata>ProductName} === ${localdata>/Invoices/0/ProductName}?true : false}">
+                                <cells>
+                                    <Text text="{localdata>ProductName}"></Text>
+                                    <Text text="{localdata>Quantity}"></Text>
+                                    <Text text="{localdata>ShipperName}"></Text>
+                                </cells>     
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                    <Button text="Press" press="click"></Button>
+
+                <!--table to pdf-->
+                <Button text="convert to pdf" press="pdf"></Button>
+
+                <!--Tab Container-->
+                 <m:TabContainer>
+                    <m:Tab text="Section 1">
+                        <Title level="H3" text="Section 1" />
+                    </m:Tab>
+                    <m:Tab text="Section 2">
+                        <Title level="H3" text="Section 2" />
+                    </m:Tab>
+                 </m:TabContainer> 
+
+                <!--Dynamically adding columns--> 
+                <Button text="ADD COLUMN" press="addcolumns"></Button>
+
+               <!--Generic tile -->
+               <GenericTile url="https://sapui5.hana.ondemand.com/" press="direct">
+                <TileContent >
+                <NumericContent value="2.54"></NumericContent>
+                </TileContent>
+               </GenericTile>
+                
+            </content>
+    </Page>
+   
+
+       
+            
+       
+   
+    
+</mvc:View>
+

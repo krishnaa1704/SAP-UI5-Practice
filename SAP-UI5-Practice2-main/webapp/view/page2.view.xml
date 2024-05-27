@@ -1,0 +1,40 @@
+<mvc:View 
+    xmlns:table="sap.ui.table" 
+    controllerName="project2.controller.page2"
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true"
+    xmlns:list="sap.m.List"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+>
+<Button text="Go to next page" press="onpress2">
+</Button>
+<Button text="Go to first page" press="onpress3"></Button>
+
+<!--splitapp
+-->
+<SplitApp >
+      <masterPages>
+         <Page title="Master 1" id="master1" backgroundDesign="List">
+           <List >
+           <StandardListItem title="To Master2" type="Navigation" press=".onPressGoToMaster"> </StandardListItem>
+           </List>  
+         </Page>
+
+         <Page title="Master 2" id="master2"  backgroundDesign="List" showNavButton="true" navButtonPress=".onPressMaster2List">
+         <List itemPress=".onListItemPress">
+         <items>
+          <StandardListItem title="To Detail 1" type="Active" />
+          <StandardListItem title="To Detail 2" type="Active"/>
+          <StandardListItem title="To Detail 3" type="Active"/>
+         </items>
+         </List>
+         
+         </Page>
+      </masterPages>
+    </SplitApp>
+    
+</mvc:View>

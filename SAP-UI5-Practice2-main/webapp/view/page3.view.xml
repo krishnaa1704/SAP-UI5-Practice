@@ -1,0 +1,15 @@
+<mvc:View 
+    xmlns:table="sap.ui.table" 
+    controllerName="project2.controller.page3"
+    xmlns:mvc="sap.ui.core.mvc" 
+    displayBlock="true"
+    xmlns:list="sap.m.List"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:layout="sap.ui.layout"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+>
+<Text text="This is third page."></Text>
+<Button text="Go to previous page" press="onpress3"></Button>
+</mvc:View>
